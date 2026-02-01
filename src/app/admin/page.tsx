@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { FormInput, Users, BarChart3, TrendingUp } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { PageHeader, PageLoadingState } from "@/components/ui/page-header";
 import { getAllForms } from "@/lib/firebase/forms";
 import { getAllSubmissions } from "@/lib/firebase/submissions";
 import { Form, Submission } from "@/lib/types/form";
@@ -49,27 +50,16 @@ export default function AdminDashboard() {
         .slice(0, 5);
 
     if (loading) {
-        return (
-            <div className="flex items-center justify-center py-20">
-                <div className="text-center">
-                    <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-                    <p className="text-surface-lighter font-mono">Loading dashboard...</p>
-                </div>
-            </div>
-        );
+        return <PageLoadingState message="Loading dashboard..." />;
     }
 
     return (
         <div className="space-y-8">
-            {/* Header */}
-            <div>
-                <h1 className="text-4xl font-black text-ink tracking-tighter">
-                    Admin Dashboard
-                </h1>
-                <p className="text-surface-lighter mt-2">
-                    Welcome to OSAtria Admin Panel
-                </p>
-            </div>
+            <PageHeader
+                title="Admin Dashboard"
+                description="Welcome to OSAtria Admin Panel"
+                titleSize="lg"
+            />
 
             {/* Stats Grid - Dynamic Data */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">

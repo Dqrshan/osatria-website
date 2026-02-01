@@ -11,6 +11,8 @@ import { FormRenderer } from "@/components/form-engine/FormRenderer";
 import { AuthGate } from "@/components/form-engine/AuthGate";
 import { SubmissionBlocker } from "@/components/form-engine/SubmissionBlocker";
 import { Card, CardContent } from "@/components/ui/card";
+import { PageLoadingState } from "@/components/ui/page-header";
+import { PublicHeader, PublicHero, PublicFooter } from "@/components/ui/public-layout";
 import { motion } from "framer-motion";
 import { AlertCircle, ArrowLeft, Search } from "lucide-react";
 import Link from "next/link";
@@ -63,14 +65,7 @@ export default function FormPage() {
     }, [slug]);
 
     if (loading) {
-        return (
-            <div className="min-h-screen bg-paper flex items-center justify-center">
-                <div className="text-center">
-                    <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-                    <p className="text-surface-lighter font-mono">Loading form environment...</p>
-                </div>
-            </div>
-        );
+        return <PageLoadingState message="Loading form environment..." />;
     }
 
     if (error || !form) {
@@ -113,15 +108,8 @@ export default function FormPage() {
 
     return (
         <div className="min-h-screen bg-paper flex flex-col">
-            {/* Minimal Header */}
-            <header className="sticky top-0 z-40 w-full bg-paper/80 backdrop-blur-md border-b-4 border-ink">
-                <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-                    <Link href="/" className="flex items-center gap-2 group">
-                        <ArrowLeft className="h-4 w-4 text-primary group-hover:-translate-x-1 transition-transform" />
-                        <span className="font-black tracking-tighter text-xl">
-                            OS<span className="text-primary">ATRIA</span>
-                        </span>
-                    </Link>
+            <PublicHeader
+                rightContent={
                     <div className="flex items-center gap-4">
                         {user && (
                             <div className="hidden md:flex flex-col items-end">
@@ -135,37 +123,14 @@ export default function FormPage() {
                             </span>
                         </div>
                     </div>
-                </div>
-            </header>
+                }
+            />
 
-            {/* Hero Section for the Form */}
-            <section className="bg-ink text-paper py-16 px-4 relative overflow-hidden">
-                {/* Background Decorations */}
-                <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none opacity-20">
-                    <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary rounded-full blur-[100px]" />
-                    <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-accent rounded-full blur-[100px]" />
-                </div>
-
-                <div className="max-w-3xl mx-auto relative z-10">
-                    <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.5 }}
-                    >
-                        <div className="inline-block px-3 py-1 bg-primary text-[10px] font-black tracking-[0.2em] uppercase mb-4">
-                            Registration Form
-                        </div>
-                        <h1 className="text-4xl md:text-6xl font-black tracking-tighter leading-none mb-4">
-                            {form.title}
-                        </h1>
-                        {form.description && (
-                            <p className="text-paper/70 text-lg md:text-xl font-medium max-w-2xl leading-relaxed">
-                                {form.description}
-                            </p>
-                        )}
-                    </motion.div>
-                </div>
-            </section>
+            <PublicHero
+                badge="Registration Form"
+                title={form.title}
+                description={form.description}
+            />
 
             {/* Main Form Content */}
             <main className="py-12 px-4 grow">
@@ -194,14 +159,7 @@ export default function FormPage() {
                 </div>
             </main>
 
-            {/* Footer */}
-            <footer className="py-6 border-t-4 border-ink bg-surface/5">
-                <div className="max-w-3xl mx-auto px-4 text-center">
-                    <p className="text-surface-lighter text-[10px]">
-                        © {new Date().getFullYear()} Atria Open Source Community. All rights reserved.
-                    </p>
-                </div>
-            </footer>
+            <PublicFooter maxWidth="3xl" />
         </div>
     );
 }

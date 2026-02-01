@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { PageHeader, PageLoadingState } from "@/components/ui/page-header";
 import { Plus, Trash2, GripVertical, Save, ArrowLeft, Loader2, Eye } from "lucide-react";
 import { QuestionEditor } from "@/components/form-builder/QuestionEditor";
 import { useSearchParams, useRouter } from "next/navigation";
@@ -216,34 +217,21 @@ function FormBuilderContent() {
     };
 
     if (initialLoading) {
-        return (
-            <div className="flex flex-col items-center justify-center py-20">
-                <Loader2 className="h-10 w-10 text-primary animate-spin mb-4" />
-                <p className="text-surface-lighter font-mono">Fetching form configuration...</p>
-            </div>
-        );
+        return <PageLoadingState message="Fetching form configuration..." />;
     }
 
     return (
         <div className="max-w-5xl mx-auto space-y-6">
             <Dialog />
-            {/* Header */}
-            <div className="flex items-start justify-between">
-                <div>
-                    <h1 className="text-4xl font-black text-ink tracking-tighter">
-                        {editSlug ? "Edit Form" : "Form Builder"}
-                    </h1>
-                    <p className="text-surface-lighter mt-2 uppercase text-xs font-mono tracking-widest">
-                        {editSlug ? `Modifying: ${editSlug}` : "Create a new form with custom fields"}
-                    </p>
-                </div>
-                <Button variant="ghost" asChild>
-                    <Link href="/admin/responses" className="flex items-center gap-2">
-                        <ArrowLeft className="h-4 w-4" />
-                        Back to List
-                    </Link>
-                </Button>
-            </div>
+            
+            <PageHeader
+                title={editSlug ? "Edit Form" : "Form Builder"}
+                description={editSlug ? `Modifying: ${editSlug}` : "Create a new form with custom fields"}
+                backButton={{
+                    label: "Back to List",
+                    href: "/admin/responses"
+                }}
+            />
 
             {/* Form Settings */}
             <Card className="border-4 border-ink shadow-[4px_4px_0_0_rgba(0,0,0,1)]">
@@ -277,7 +265,7 @@ function FormBuilderContent() {
                             Form Slug * <span className="text-surface-lighter text-[10px] normal-case tracking-normal">(Unique URL path)</span>
                         </label>
                         <div className="flex items-center gap-2">
-                            <span className="text-surface-lighter text-sm font-mono">osatria.in/forms/</span>
+                            <span className="text-surface-lighter w-auto text-nowrap text-sm font-mono">osatria.in/forms/</span>
                             <Input
                                 placeholder="beta-testing"
                                 value={formSlug}
@@ -363,12 +351,12 @@ function FormBuilderContent() {
                     )}
                     {editSlug ? "Update Form" : "Create & Save Form"}
                 </Button>
-                <Button variant="outline" size="lg" asChild className="hidden sm:flex">
+                {/* <Button variant="outline" size="lg" asChild className="hidden sm:flex">
                     <Link href={formSlug ? `/forms/${formSlug}` : "#"} target="_blank">
                         <Eye className="h-5 w-5 mr-2" />
                         Preview
                     </Link>
-                </Button>
+                </Button> */}
             </div>
         </div>
     );

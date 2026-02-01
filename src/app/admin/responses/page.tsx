@@ -6,6 +6,7 @@ import { getAllSubmissions } from "@/lib/firebase/submissions";
 import { Form, Submission } from "@/lib/types/form";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { PageHeader, PageLoadingState } from "@/components/ui/page-header";
 import { BarChart3, Trash2, Edit3, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { useConfirmDialog } from "@/components/ui/confirm-dialog";
@@ -53,30 +54,22 @@ export default function ResponsesPage() {
     };
 
     if (loading) {
-        return (
-            <div className="flex items-center justify-center py-20">
-                <div className="text-center">
-                    <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-                    <p className="text-surface-lighter font-mono">Loading responses...</p>
-                </div>
-            </div>
-        );
+        return <PageLoadingState message="Loading responses..." />;
     }
 
     return (
         <div className="space-y-8">
             <Dialog />
 
-            {/* Header */}
-            <div className="flex items-center justify-between">
-                <div>
-                    <h1 className="text-4xl font-black text-ink tracking-tighter">Form Responses</h1>
-                    <p className="text-surface-lighter mt-2">View and manage your forms and submissions</p>
-                </div>
-                <Button variant="brutalist" asChild>
-                    <Link href="/admin/builder">Create New Form</Link>
-                </Button>
-            </div>
+            <PageHeader
+                title="Form Responses"
+                description="View and manage your forms and submissions"
+                actions={{
+                    label: "Create New Form",
+                    href: "/admin/builder",
+                    variant: "brutalist"
+                }}
+            />
 
             {/* Forms List */}
             <div className="grid gap-6">

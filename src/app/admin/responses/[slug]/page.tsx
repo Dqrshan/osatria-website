@@ -7,6 +7,7 @@ import { getSubmissions, deleteSubmission } from "@/lib/firebase/submissions";
 import { Form, Submission } from "@/lib/types/form";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { PageHeader, PageLoadingState, PageEmptyState } from "@/components/ui/page-header";
 import { Download, ArrowLeft, BarChart3, Trash2, FileSpreadsheet } from "lucide-react";
 import { exportToXLSX } from "@/lib/utils/export";
 import { useConfirmDialog } from "@/components/ui/confirm-dialog";
@@ -70,14 +71,7 @@ export default function FormResponsesPage() {
     };
 
     if (loading) {
-        return (
-            <div className="flex items-center justify-center py-20">
-                <div className="text-center">
-                    <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-                    <p className="text-surface-lighter font-mono">Loading...</p>
-                </div>
-            </div>
-        );
+        return <PageLoadingState />;
     }
 
     if (!form) {
@@ -113,37 +107,35 @@ export default function FormResponsesPage() {
         <div className="space-y-6">
             <Dialog />
 
-            {/* Header */}
-            <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
-                <div className="flex-1">
-                    <Button
-                        variant="ghost"
-                        onClick={() => router.push("/admin/responses")}
-                        className="mb-4 -ml-4 h-8 text-xs font-mono uppercase"
-                    >
-                        <ArrowLeft className="mr-2 h-3 w-3" />
-                        Back to Responses
-                    </Button>
-                    <h1 className="text-3xl md:text-4xl font-black text-ink tracking-tighter wrap-break-word">{form.title}</h1>
-                    <p className="text-surface-lighter mt-1 text-sm md:text-base">{submissions.length} total responses saved</p>
-                </div>
-                <div className="shrink-0">
-                    <Button variant="brutalist" onClick={handleExportXLSX} className="w-full md:w-auto">
-                        <FileSpreadsheet className="mr-2 h-4 w-4" />
-                        Export to XLSX
-                    </Button>
-                </div>
-            </div>
+            <PageHeader
+                title={form.title}
+                description={`${submissions.length} total responses saved`}
+                backButton={{
+                    label: "Back to Responses",
+                    href: "/admin/responses"
+                }}
+                actions={{
+                    label: "Export to XLSX",
+                    onClick: handleExportXLSX,
+                    variant: "brutalist",
+                    icon: FileSpreadsheet
+                }}
+            />
 
             {/* Responses List */}
             {submissions.length === 0 ? (
                 <Card className="border-4 border-dashed border-surface/20 bg-surface/5">
-                    <CardContent className="py-16 text-center">
-                        <BarChart3 className="h-12 w-12 text-surface-lighter mx-auto mb-4 opacity-20" />
-                        <p className="text-surface-lighter font-medium">No responses yet. Send your form link to start collecting data!</p>
-                        <Button variant="outline" onClick={() => router.push(`/forms/${form.slug}`)} className="mt-4">
-                            Open Public Form
-                        </Button>
+                    <CardContent>
+                        <PageEmptyState
+                            icon={BarChart3}
+                            title="No responses yet"
+                            description="Send your form link to start collecting data!"
+                            action={{
+                                label: "Open Public Form",
+                                onClick: () => router.push(`/forms/${form.slug}`),
+                                variant: "outline"
+                            }}
+                        />
                     </CardContent>
                 </Card>
             ) : (
