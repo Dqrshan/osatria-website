@@ -177,7 +177,7 @@ export default function FormPage() {
                             </CardContent>
                         </Card>
                     ) : hasSubmitted ? (
-                        <Card className="border-4 border-ink shadow-[8px_8px_0_0_rgba(0,0,0,1)]">
+                        <Card>
                             <CardContent className="p-0">
                                 <SubmissionBlocker formTitle={form.title} />
                             </CardContent>
