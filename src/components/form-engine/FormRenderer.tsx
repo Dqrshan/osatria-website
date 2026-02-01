@@ -11,6 +11,7 @@ import { FieldRenderer } from "./FieldRenderer";
 import { User } from "firebase/auth";
 import { CheckCircle2, AlertCircle, ArrowRight, Home } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { SiWhatsapp } from "react-icons/si";
 
 interface FormRendererProps {
     form: Form;
@@ -93,6 +94,10 @@ export function FormRenderer({ form, user }: FormRendererProps) {
                             <ul className="space-y-3">
                                 <li className="flex items-start gap-3 text-sm font-medium">
                                     <ArrowRight className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+                                    <span>Join our <a href="https://chat.whatsapp.com/DmWJm7XyQjeAg1psXWUj6K?mode=gi_t" className="text-green-400 hover:text-green-500">WhatsApp group</a> for updates and more.</span>
+                                </li>
+                                {/* <li className="flex items-start gap-3 text-sm font-medium">
+                                    <ArrowRight className="h-4 w-4 text-primary mt-0.5 shrink-0" />
                                     <span>We'll review your submission and get back to you soon.</span>
                                 </li>
                                 <li className="flex items-start gap-3 text-sm font-medium">
@@ -102,7 +107,7 @@ export function FormRenderer({ form, user }: FormRendererProps) {
                                 <li className="flex items-start gap-3 text-sm font-medium">
                                     <ArrowRight className="h-4 w-4 text-primary mt-0.5 shrink-0" />
                                     <span>Join our community discord for live help and discussions.</span>
-                                </li>
+                                </li> */}
                             </ul>
                         </div>
 
@@ -111,8 +116,9 @@ export function FormRenderer({ form, user }: FormRendererProps) {
                                 <Home className="mr-2 h-4 w-4" />
                                 Back to Portal
                             </Button>
-                            <Button variant="outline" className="flex-1" onClick={() => window.print()}>
-                                Save as PDF
+                            <Button variant="outline" className="flex-1" onClick={() => window.open("https://chat.whatsapp.com/DmWJm7XyQjeAg1psXWUj6K?mode=gi_t", "_blank")}>
+                                <SiWhatsapp className="mr-2 h-4 w-4" />
+                                WhatsApp Group
                             </Button>
                         </div>
                     </CardContent>
