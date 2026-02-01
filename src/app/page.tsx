@@ -1,5 +1,4 @@
 import { HeroSection } from "@/components/landing/HeroSection";
-import { CollaborationBadge } from "@/components/animations/CollaborationBadge";
 import { AlertBanner } from "@/components/ui/alert-banner";
 
 export default function Home() {
