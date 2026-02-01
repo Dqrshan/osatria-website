@@ -4,9 +4,10 @@ import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "@/lib/firebase/config";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Chrome, ShieldCheck, Lock, AlertCircle } from "lucide-react";
+import { ShieldCheck, Lock, AlertCircle } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { SiGoogle } from "react-icons/si";
 
 interface AuthGateProps {
     formTitle: string;
@@ -76,7 +77,7 @@ export function AuthGate({ formTitle }: AuthGateProps) {
                         disabled={loading}
                         className="w-full group"
                     >
-                        <Chrome className="mr-3 h-5 w-5" />
+                        <SiGoogle className="mr-3 h-5 w-5" />
                         {loading ? "Authenticating..." : "Continue with Google"}
                     </Button>
                     <p className="text-[10px] text-center text-surface-lighter font-mono uppercase tracking-widest">
