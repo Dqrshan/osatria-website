@@ -186,7 +186,7 @@ export function FormRenderer({ form, user }: FormRendererProps) {
                 <CardContent className="p-8 text-center">
                     <p className="text-sm font-medium text-surface-lighter mb-6">
                         Please review all your answers before submitting.
-                        By clicking submit, you agree to our terms of participation.
+                        By clicking submit, you agree to our <a className="underline decoration-dotted hover:text-surface" target="_blank" href="/legal/terms-of-participation">terms of participation</a>.
                     </p>
                     <Button
                         type="submit"
