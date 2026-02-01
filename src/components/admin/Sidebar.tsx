@@ -127,7 +127,10 @@ export function Sidebar({ onClose, className }: SidebarProps) {
                     <p className="text-[10px] text-white/40 font-mono uppercase tracking-widest leading-none mb-1">
                         Administrator
                     </p>
-                    <p className="text-sm text-white font-medium truncate">
+                    <p className="text-sm text-white font-bold truncate">
+                        {user?.displayName || "Loading..."}
+                    </p>
+                    <p className="text-[12px] text-white/50 font-medium truncate">
                         {user?.email || "Loading..."}
                     </p>
                 </div>
