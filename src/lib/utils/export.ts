@@ -35,6 +35,9 @@ export function exportToCSV(
                 if (Array.isArray(value)) {
                     return value.join('; ');
                 }
+                if (value && typeof value === 'object' && 'url' in value) {
+                    return value.url;
+                }
                 return value || '';
             }),
         ];
@@ -73,7 +76,7 @@ export async function exportToXLSX(
             ? submission.submittedAt.toLocaleString()
             : new Date(submission.submittedAt.seconds * 1000).toLocaleString();
 
-        const row: Record<string, any> = {
+        const row: Record<string, unknown> = {
             'Submitted At': submittedAt,
             'Name': submission.userName,
             'Email': submission.userEmail,
@@ -83,6 +86,8 @@ export async function exportToXLSX(
             const value = submission.responses[field.id];
             if (Array.isArray(value)) {
                 row[field.label] = value.join('; ');
+            } else if (value && typeof value === 'object' && 'url' in value) {
+                row[field.label] = value.url;
             } else {
                 row[field.label] = value || '';
             }
