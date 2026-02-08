@@ -51,7 +51,7 @@ export function AuthGate({ formTitle }: AuthGateProps) {
                         <ShieldCheck className="h-6 w-6 text-primary shrink-0" />
                         <div className="text-sm">
                             <p className="font-bold text-ink">Identity Verification</p>
-                            <p className="text-surface-lighter">To prevent duplicate entries and ensure security, please verify your identity via Google.</p>
+                            <p className="text-ink/75">To prevent duplicate entries and ensure security, please verify your identity via Google.</p>
                         </div>
                     </div>
 
@@ -80,7 +80,7 @@ export function AuthGate({ formTitle }: AuthGateProps) {
                         <SiGoogle className="mr-3 h-5 w-5" />
                         {loading ? "Authenticating..." : "Continue with Google"}
                     </Button>
-                    <p className="text-[10px] text-center text-surface-lighter font-mono uppercase tracking-widest">
+                    <p className="text-[10px] text-center text-ink/75 font-mono uppercase tracking-widest">
                         Fast, Secure, and Private
                     </p>
                 </div>

@@ -51,7 +51,7 @@ export function ConfirmDialog({
         default: "text-primary",
         destructive: "text-red-500",
         warning: "text-accent",
-        success: "text-green-500",
+        success: "text-indigo-600",
     };
 
     const Icon = icons[variant];

@@ -1,3 +1,5 @@
+"use client";
+
 import { ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, LucideIcon } from "lucide-react";
@@ -18,12 +20,12 @@ export interface PageHeaderProps {
      * Main title of the page
      */
     title: string | ReactNode;
-    
+
     /**
      * Optional subtitle/description
      */
     description?: string | ReactNode;
-    
+
     /**
      * Optional back button configuration
      */
@@ -32,22 +34,22 @@ export interface PageHeaderProps {
         href?: string;
         onClick?: () => void;
     };
-    
+
     /**
      * Primary action button(s) on the right side
      */
     actions?: PageHeaderAction | PageHeaderAction[];
-    
+
     /**
      * Custom className for the header container
      */
     className?: string;
-    
+
     /**
      * Size variant for the title
      */
     titleSize?: "sm" | "md" | "lg" | "xl";
-    
+
     /**
      * Custom content to render in the header (overrides default layout)
      */
@@ -62,10 +64,10 @@ export interface PageHeaderProps {
  * <PageHeader
  *   title="Form Responses"
  *   description="View and manage your forms"
- *   backButton={{ label: "Back to Dashboard", href: "/admin" }}
+ *   backButton={{ label: "Back to Dashboard", href: "/dashboard/admin" }}
  *   actions={{
  *     label: "Create New Form",
- *     href: "/admin/builder",
+ *     href: "/dashboard/admin/builder",
  *     variant: "brutalist"
  *   }}
  * />
@@ -149,24 +151,24 @@ export function PageHeader({
                     <Button
                         variant="ghost"
                         onClick={handleBackClick}
-                        className="mb-4 -ml-4 h-8 text-xs font-mono uppercase"
+                        className="mb-4 -ml-4 h-8 text-xs font-mono uppercase text-ink/70 hover:text-primary hover:bg-transparent"
                     >
                         <ArrowLeft className="mr-2 h-3 w-3" />
                         {backButton.label || "Back"}
                     </Button>
                 )}
-                
-                <h1 className={`${titleSizeClasses[titleSize]} font-black text-ink tracking-tighter`}>
+
+                <h1 className={`${titleSizeClasses[titleSize]} font-black text-slate-900 tracking-tighter uppercase`}>
                     {title}
                 </h1>
-                
+
                 {description && (
-                    <p className="text-surface-lighter mt-1 text-sm md:text-base">
+                    <p className="text-ink/70 mt-1 text-sm md:text-base font-mono">
                         {description}
                     </p>
                 )}
             </div>
-            
+
             {actionArray.length > 0 && (
                 <div className="shrink-0 flex flex-col md:flex-row gap-2">
                     {actionArray.map((action, index) => renderAction(action, index))}
@@ -178,19 +180,6 @@ export function PageHeader({
 
 /**
  * Reusable empty state component for pages with no data
- * 
- * @example
- * ```tsx
- * <PageEmptyState
- *   icon={BarChart3}
- *   title="No responses yet"
- *   description="Send your form link to start collecting data!"
- *   action={{
- *     label: "Open Public Form",
- *     onClick: () => router.push(`/forms/${slug}`)
- *   }}
- * />
- * ```
  */
 export interface PageEmptyStateProps {
     icon?: LucideIcon;
@@ -210,17 +199,18 @@ export function PageEmptyState({
     return (
         <div className={`py-16 text-center ${className}`}>
             {Icon && (
-                <Icon className="h-12 w-12 text-surface-lighter mx-auto mb-4 opacity-20" />
+                <Icon className="h-12 w-12 text-ink/75 mx-auto mb-4 opacity-20" />
             )}
             <h3 className="text-xl font-bold text-ink mb-2">{title}</h3>
             {description && (
-                <p className="text-surface-lighter font-medium mb-6">{description}</p>
+                <p className="text-ink/60 font-medium mb-6 font-mono">{description}</p>
             )}
             {action && (
                 <Button
                     variant={action.variant || "outline"}
                     onClick={action.onClick}
                     disabled={action.disabled || action.loading}
+                    className="border-surface-lighter text-ink hover:border-primary hover:text-primary"
                 >
                     {action.icon && <action.icon className="mr-2 h-4 w-4" />}
                     {action.label}
@@ -232,11 +222,6 @@ export function PageEmptyState({
 
 /**
  * Reusable loading state component
- * 
- * @example
- * ```tsx
- * <PageLoadingState message="Loading responses..." />
- * ```
  */
 export interface PageLoadingStateProps {
     message?: string;
@@ -251,7 +236,7 @@ export function PageLoadingState({
         <div className={`flex items-center justify-center py-20 ${className}`}>
             <div className="text-center">
                 <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-                <p className="text-surface-lighter font-mono">{message}</p>
+                <p className="text-ink/70 font-mono animate-pulse">{message}</p>
             </div>
         </div>
     );

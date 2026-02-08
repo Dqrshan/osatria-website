@@ -11,8 +11,8 @@ import { FormRenderer } from "@/components/form-engine/FormRenderer";
 import { AuthGate } from "@/components/form-engine/AuthGate";
 import { SubmissionBlocker } from "@/components/form-engine/SubmissionBlocker";
 import { Card, CardContent } from "@/components/ui/card";
-import { PageLoadingState } from "@/components/ui/page-header";
-import { PublicHeader, PublicHero, PublicFooter } from "@/components/ui/public-layout";
+import { PageLoadingState } from "@/components/layout/PageHeader";
+import { PublicHeader, PublicHero, PublicFooter } from "@/components/layout/PublicLayout";
 import { motion } from "framer-motion";
 import { AlertCircle, ArrowLeft, Search } from "lucide-react";
 import Link from "next/link";
@@ -70,62 +70,43 @@ export default function FormPage() {
 
     if (error || !form) {
         return (
-            <div className="min-h-screen bg-paper flex flex-col items-center justify-center p-6 bg-[radial-gradient(circle_at_top,var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="max-w-md w-full"
-                >
-                    <Card className="border-4 border-ink shadow-[8px_8px_0_0_rgba(0,0,0,1)] overflow-hidden">
-                        <div className="h-2 bg-red-500 w-full" />
-                        <CardContent className="pt-10 pb-10 text-center">
-                            <div className="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-6">
-                                <Search className="h-10 w-10 text-red-500" />
-                            </div>
-                            <h1 className="text-3xl font-black text-ink mb-3 tracking-tighter uppercase">Form Not Found</h1>
-                            <p className="text-surface-lighter mb-8 font-medium">
-                                {error === "Form not found"
-                                    ? "We couldn't find the registration form you're looking for. It might have been deleted or the link is incorrect."
-                                    : "There was a technical glitch while trying to retrieve this form. Please try again later."}
-                            </p>
-                            <div className="flex flex-col gap-3">
-                                <Button variant="brutalist" asChild>
-                                    <Link href="/">Return to Homepage</Link>
-                                </Button>
-                                <Button variant="outline" onClick={() => window.location.reload()}>
-                                    Retry Access
-                                </Button>
-                            </div>
-                        </CardContent>
-                    </Card>
-                    <p className="text-center mt-8 text-surface-lighter font-mono text-xs uppercase tracking-widest">
-                        ERROR CODE: {error === "Form not found" ? "404_FORM_MISSING" : "500_FETCH_FAILURE"}
+            <div className="min-h-screen bg-paper flex flex-col items-center justify-center p-6 text-center">
+                <div className="max-w-md w-full space-y-6">
+                    <div className="w-16 h-16 border-2 border-ink rounded-full flex items-center justify-center mx-auto mb-6">
+                        <Search className="h-8 w-8 text-ink" />
+                    </div>
+                    <div>
+                        <h1 className="text-4xl font-black text-ink mb-2 uppercase tracking-tight">
+                            {error === "Form not found" ? "Form Not Found" : "Error Loading Form"}
+                        </h1>
+                        <p className="text-ink/70 text-lg font-medium leading-relaxed">
+                            {error === "Form not found"
+                                ? "This form doesn't exist or has been removed."
+                                : "We couldn't load this form right now."}
+                        </p>
+                    </div>
+
+                    <div className="pt-4 flex flex-col sm:flex-row gap-3 justify-center">
+                        <Button variant="brutalist" asChild>
+                            <Link href="/">Return Home</Link>
+                        </Button>
+                        {error !== "Form not found" && (
+                            <Button variant="outline" onClick={() => window.location.reload()}>
+                                Try Again
+                            </Button>
+                        )}
+                    </div>
+
+                    <p className="text-xs text-ink/40 font-mono uppercase tracking-widest pt-8">
+                        {error === "Form not found" ? "404_FORM_MISSING" : "500_FETCH_FAILURE"}
                     </p>
-                </motion.div>
+                </div>
             </div>
         );
     }
 
     return (
         <div className="min-h-screen bg-paper flex flex-col">
-            <PublicHeader
-                rightContent={
-                    <div className="flex items-center gap-4">
-                        {user && (
-                            <div className="hidden md:flex flex-col items-end">
-                                <span className="text-[10px] font-mono text-surface-lighter uppercase leading-none">Logged in as</span>
-                                <span className="text-xs font-bold text-ink leading-tight">{user.email}</span>
-                            </div>
-                        )}
-                        <div className="h-8 w-8 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center">
-                            <span className="text-xs font-black text-primary">
-                                {user?.email?.[0].toUpperCase() || "A"}
-                            </span>
-                        </div>
-                    </div>
-                }
-            />
-
             <PublicHero
                 badge="Registration Form"
                 title={form.title}
@@ -158,8 +139,6 @@ export default function FormPage() {
                     )}
                 </div>
             </main>
-
-            <PublicFooter maxWidth="3xl" />
         </div>
     );
 }
