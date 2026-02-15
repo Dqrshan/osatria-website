@@ -64,7 +64,6 @@ export async function exportToXLSX(
     filename: string
 ): Promise<void> {
     if (submissions.length === 0) {
-        alert('No data to export');
         return;
     }
 
