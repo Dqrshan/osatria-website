@@ -6,8 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { addRepository, getRepositories, deleteRepository, updateRepositoryMaintainer, Repository } from "@/lib/firebase/repos";
 import { getWhitelistedMaintainers, WhitelistedMaintainer } from "@/lib/firebase/whitelist";
+import { getUserByGithubUsername } from "@/lib/firebase/users";
 import { PageHeader } from "@/components/layout/PageHeader";
-import { Trash2, ExternalLink, Plus, Github } from "lucide-react";
+import { Trash2, Plus, Github } from "lucide-react";
 import Link from "next/link";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { AlertModal, useAlert } from "@/components/ui/alert-modal";
@@ -24,8 +25,6 @@ export default function AdminReposPage() {
     const [newRepoName, setNewRepoName] = useState("");
     const [newRepoTier, setNewRepoTier] = useState<"gold" | "silver" | "bronze">("bronze");
     const [loading, setLoading] = useState(false);
-    const [fetchingGithub, setFetchingGithub] = useState(false);
-    const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
     const { alertState, showAlert, closeAlert } = useAlert();
 
     useEffect(() => {
@@ -49,7 +48,6 @@ export default function AdminReposPage() {
     const handleAddRepo = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
-        setFetchingGithub(true);
 
         try {
             // Fetch metadata from GitHub
@@ -79,12 +77,10 @@ export default function AdminReposPage() {
             showAlert("error", "Failed to Add Repository", "Could not add the repository. Please check the owner/name and try again.");
         } finally {
             setLoading(false);
-            setFetchingGithub(false);
         }
     };
 
     const handleDelete = async (id: string) => {
-        setDeleteTarget(id);
         showAlert(
             "confirm",
             "Delete Repository",
@@ -92,17 +88,24 @@ export default function AdminReposPage() {
             async () => {
                 await deleteRepository(id);
                 fetchData();
-                setDeleteTarget(null);
             }
         );
     };
 
     const handleAssignMaintainer = async (repoId: string, maintainerUsername: string) => {
-        const maintainer = maintainers.find(m => m.githubUsername === maintainerUsername);
-
         try {
-            await updateRepositoryMaintainer(repoId, "pending", maintainerUsername);
-            setRepos(repos.map(r => r.id === repoId ? { ...r, maintainerUsername } : r));
+            const maintainerUser = await getUserByGithubUsername(maintainerUsername);
+            if (!maintainerUser?.uid) {
+                showAlert(
+                    "error",
+                    "Maintainer Not Found",
+                    `${maintainerUsername} needs to sign in once before assignment so we can map their account.`
+                );
+                return;
+            }
+
+            await updateRepositoryMaintainer(repoId, maintainerUser.uid, maintainerUsername);
+            setRepos(repos.map(r => r.id === repoId ? { ...r, maintainerId: maintainerUser.uid, maintainerUsername } : r));
             showAlert("success", "Maintainer Assigned", `Successfully assigned ${maintainerUsername || 'maintainer'} as maintainer.`);
         } catch (error) {
             console.error("Error assigning maintainer", error);
@@ -158,7 +161,7 @@ export default function AdminReposPage() {
                                 </div>
                                 <div className="grid w-full items-center gap-1.5">
                                     <label htmlFor="tier" className="text-sm font-medium leading-none">Tier</label>
-                                    <Select value={newRepoTier} onValueChange={(v: any) => setNewRepoTier(v)}>
+                                    <Select value={newRepoTier} onValueChange={(v: string) => setNewRepoTier(v)}>
                                         <SelectTrigger>
                                             <SelectValue placeholder="Select Tier" />
                                         </SelectTrigger>

@@ -48,9 +48,9 @@ export default function AdminMaintainersPage() {
             setNewUsername("");
             fetchMaintainers();
             showAlert("success", "Maintainer Added", `Successfully whitelisted ${newUsername} as a maintainer.`);
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error("Error adding maintainer:", error);
-            const errorMsg = error.message || "Failed to add maintainer";
+            const errorMsg = error instanceof Error ? error.message : "Failed to add maintainer";
             setError(errorMsg);
             showAlert("error", "Failed to Add Maintainer", errorMsg);
         } finally {

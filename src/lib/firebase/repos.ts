@@ -1,5 +1,5 @@
 import { db } from './config';
-import { collection, addDoc, getDocs, doc, deleteDoc, updateDoc, query, where, getDoc } from 'firebase/firestore';
+import { collection, addDoc, getDocs, doc, deleteDoc, updateDoc, query, where } from 'firebase/firestore';
 
 export interface Repository {
     id: string;
@@ -51,11 +51,27 @@ export const updateRepositoryMaintainer = async (repoId: string, maintainerId: s
     }
 };
 
-export const getMaintainerRepositories = async (maintainerId: string) => {
+export const getMaintainerRepositories = async (maintainerId: string, githubUsername?: string | null) => {
     try {
-        const q = query(collection(db, 'repositories'), where("maintainerId", "==", maintainerId));
-        const querySnapshot = await getDocs(q);
-        return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Repository));
+        const repositoriesRef = collection(db, 'repositories');
+        const snapshots = [];
+
+        const byIdQuery = query(repositoriesRef, where("maintainerId", "==", maintainerId));
+        snapshots.push(await getDocs(byIdQuery));
+
+        if (githubUsername) {
+            const byUsernameQuery = query(repositoriesRef, where("maintainerUsername", "==", githubUsername));
+            snapshots.push(await getDocs(byUsernameQuery));
+        }
+
+        const merged = new Map<string, Repository>();
+        snapshots.forEach((snapshot) => {
+            snapshot.docs.forEach((repoDoc) => {
+                merged.set(repoDoc.id, { id: repoDoc.id, ...repoDoc.data() } as Repository);
+            });
+        });
+
+        return Array.from(merged.values());
     } catch (error) {
         console.error("Error getting maintainer repositories: ", error);
         return [];
