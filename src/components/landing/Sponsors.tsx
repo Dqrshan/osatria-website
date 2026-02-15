@@ -91,7 +91,7 @@ export const Sponsors = () => {
                             className="h-14 px-10 border border-ink/20 bg-surface text-ink hover:bg-primary hover:text-surface-light hover:border-primary hover:shadow-[8px_8px_0_0_rgba(79,70,229,0.2)] active:translate-y-0.5 active:shadow-none transition-all duration-300 font-bold uppercase tracking-[0.25em] text-[11px] flex items-center gap-3 rounded-none relative z-10"
                             asChild
                         >
-                            <Link href="mailto:sponsors@osatria.com">
+                            <Link href="mailto:realdarshan@outlook.com">
                                 <Mail className="h-4 w-4" />
                                 Join the Alliance
                             </Link>
