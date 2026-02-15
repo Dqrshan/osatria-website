@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ComponentType } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { useAuth } from "@/context/auth";
-import { FormInput, Users, BarChart3, TrendingUp, LogOut } from "lucide-react";
+import { FormInput, Users, BarChart3, TrendingUp } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { PageHeader, PageLoadingState } from "@/components/layout/PageHeader";
@@ -11,25 +10,48 @@ import { getAllForms } from "@/lib/firebase/forms";
 import { getAllSubmissions } from "@/lib/firebase/submissions";
 import { Form, Submission } from "@/lib/types/form";
 import { dashboardRoutes } from "@/lib/routes/dashboard";
-import { useRouter } from "next/navigation";
 
 // This code was moved from src/app/admin/page.tsx
 export function AdminView() {
-    const { logout } = useAuth(); // Get logout function
-    const router = useRouter();
     const [forms, setForms] = useState<Form[]>([]);
     const [submissions, setSubmissions] = useState<Submission[]>([]);
     const [loading, setLoading] = useState(true);
+    const [permissionError, setPermissionError] = useState<string | null>(null);
 
     useEffect(() => {
+        const isPermissionDenied = (error: unknown) =>
+            typeof error === "object" &&
+            error !== null &&
+            "code" in error &&
+            String((error as { code?: unknown }).code) === "permission-denied";
+
         const fetchData = async () => {
             try {
-                const [formsData, submissionsData] = await Promise.all([
+                setPermissionError(null);
+
+                const [formsResult, submissionsResult] = await Promise.allSettled([
                     getAllForms(),
                     getAllSubmissions(),
                 ]);
-                setForms(formsData);
-                setSubmissions(submissionsData);
+
+                if (formsResult.status === "fulfilled") {
+                    setForms(formsResult.value);
+                } else {
+                    setForms([]);
+                    console.error("Error fetching forms:", formsResult.reason);
+                }
+
+                if (submissionsResult.status === "fulfilled") {
+                    setSubmissions(submissionsResult.value);
+                } else {
+                    setSubmissions([]);
+                    console.error("Error fetching submissions:", submissionsResult.reason);
+                    if (isPermissionDenied(submissionsResult.reason)) {
+                        setPermissionError(
+                            "Submission access is blocked by Firestore rules for this account. Verify users/{uid}.role is 'admin' in production and redeploy rules."
+                        );
+                    }
+                }
             } catch (error) {
                 console.error("Error fetching dashboard data:", error);
             } finally {
@@ -63,6 +85,14 @@ export function AdminView() {
                 description="Welcome to ASoC Admin Panel"
                 titleSize="lg"
             />
+
+            {permissionError && (
+                <Card className="border-2 border-red-500/30 bg-red-50">
+                    <CardContent className="py-4 text-sm font-medium text-red-700">
+                        {permissionError}
+                    </CardContent>
+                </Card>
+            )}
 
             {/* ... (rest of the content with improved grid spacing) */}
 
@@ -117,7 +147,15 @@ export function AdminView() {
 }
 
 // Helper Components for cleaner code
-const StatsCard = ({ title, value, label, icon: Icon, accent }: any) => (
+interface StatsCardProps {
+    title: string;
+    value: string | number;
+    label: string;
+    icon: ComponentType<{ className?: string }>;
+    accent?: boolean;
+}
+
+const StatsCard = ({ title, value, label, icon: Icon, accent }: StatsCardProps) => (
     <Card className={`border-2 ${accent ? 'border-accent shadow-[4px_4px_0_0_var(--color-accent)]' : 'border-primary shadow-[4px_4px_0_0_var(--color-primary)]'} hover:-translate-y-1 transition-transform bg-surface-light rounded-none group`}>
         <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className={`text-sm font-bold uppercase tracking-wider ${accent ? 'text-accent' : 'text-primary'}`}>{title}</CardTitle>
@@ -143,7 +181,7 @@ const ActivityItem = ({ submission, forms }: { submission: Submission, forms: Fo
             <div className="h-2 w-2 bg-primary rounded-none rotate-45 mt-2 shrink-0" />
             <div>
                 <p className="font-bold text-sm leading-tight text-ink">
-                    New submission to <span className="text-primary">"{forms.find(f => f.slug === submission.formSlug)?.title || submission.formSlug}"</span>
+                    New submission to <span className="text-primary">&quot;{forms.find(f => f.slug === submission.formSlug)?.title || submission.formSlug}&quot;</span>
                 </p>
                 <p className="text-xs text-ink/75 font-(family-name:--font-jetbrains) mt-1">
                     {submission.userEmail} • {timeAgo}

@@ -20,6 +20,7 @@ export default function ResponsesPage() {
     const [forms, setForms] = useState<Form[]>([]);
     const [submissions, setSubmissions] = useState<Submission[]>([]);
     const [loading, setLoading] = useState(true);
+    const [permissionError, setPermissionError] = useState<string | null>(null);
     const [alertState, setAlertState] = useState<{
         isOpen: boolean;
         type: AlertType;
@@ -60,13 +61,37 @@ export default function ResponsesPage() {
         setAlertState((prev) => ({ ...prev, isOpen: false }));
     };
     const fetchData = async () => {
+        const isPermissionDenied = (error: unknown) =>
+            typeof error === "object" &&
+            error !== null &&
+            "code" in error &&
+            String((error as { code?: unknown }).code) === "permission-denied";
+
         try {
-            const [formsData, submissionsData] = await Promise.all([
+            setPermissionError(null);
+            const [formsData, submissionsData] = await Promise.allSettled([
                 getAllForms(),
                 getAllSubmissions(),
             ]);
-            setForms(formsData);
-            setSubmissions(submissionsData);
+
+            if (formsData.status === "fulfilled") {
+                setForms(formsData.value);
+            } else {
+                setForms([]);
+                console.error("Error fetching forms:", formsData.reason);
+            }
+
+            if (submissionsData.status === "fulfilled") {
+                setSubmissions(submissionsData.value);
+            } else {
+                setSubmissions([]);
+                console.error("Error fetching submissions:", submissionsData.reason);
+                if (isPermissionDenied(submissionsData.reason)) {
+                    setPermissionError(
+                        "Responses are blocked by Firestore rules for this account. Verify users/{uid}.role is 'admin' and redeploy rules."
+                    );
+                }
+            }
         } catch (error) {
             console.error("Error fetching data:", error);
         } finally {
@@ -114,6 +139,14 @@ export default function ResponsesPage() {
                     variant: "brutalist"
                 }}
             />
+
+            {permissionError && (
+                <Card className="border-2 border-red-500/30 bg-red-50">
+                    <CardContent className="py-4 text-sm font-medium text-red-700">
+                        {permissionError}
+                    </CardContent>
+                </Card>
+            )}
 
             {/* Forms List */}
             <div className="grid gap-6">

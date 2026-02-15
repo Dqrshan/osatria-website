@@ -25,6 +25,7 @@ export default function FormResponsesPage() {
     const [form, setForm] = useState<Form | null>(null);
     const [submissions, setSubmissions] = useState<Submission[]>([]);
     const [loading, setLoading] = useState(true);
+    const [permissionError, setPermissionError] = useState<string | null>(null);
     const [alertState, setAlertState] = useState<{
         isOpen: boolean;
         type: AlertType;
@@ -66,13 +67,37 @@ export default function FormResponsesPage() {
     };
 
     const fetchData = useCallback(async () => {
+        const isPermissionDenied = (error: unknown) =>
+            typeof error === "object" &&
+            error !== null &&
+            "code" in error &&
+            String((error as { code?: unknown }).code) === "permission-denied";
+
         try {
-            const [formData, submissionsData] = await Promise.all([
+            setPermissionError(null);
+            const [formData, submissionsData] = await Promise.allSettled([
                 getForm(slug),
                 getSubmissions(slug),
             ]);
-            setForm(formData);
-            setSubmissions(submissionsData);
+
+            if (formData.status === "fulfilled") {
+                setForm(formData.value);
+            } else {
+                setForm(null);
+                console.error("Error fetching form:", formData.reason);
+            }
+
+            if (submissionsData.status === "fulfilled") {
+                setSubmissions(submissionsData.value);
+            } else {
+                setSubmissions([]);
+                console.error("Error fetching submissions:", submissionsData.reason);
+                if (isPermissionDenied(submissionsData.reason)) {
+                    setPermissionError(
+                        "Submission access is blocked by Firestore rules for this account. Verify users/{uid}.role is 'admin' and redeploy rules."
+                    );
+                }
+            }
         } catch (error) {
             console.error("Error fetching data:", error);
         } finally {
@@ -166,6 +191,14 @@ export default function FormResponsesPage() {
                     icon: FileSpreadsheet
                 }}
             />
+
+            {permissionError && (
+                <Card className="border-2 border-red-500/30 bg-red-50">
+                    <CardContent className="py-4 text-sm font-medium text-red-700">
+                        {permissionError}
+                    </CardContent>
+                </Card>
+            )}
 
             {/* Responses List */}
             {submissions.length === 0 ? (
