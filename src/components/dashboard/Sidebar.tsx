@@ -14,13 +14,18 @@ import {
     Menu,
     UserCircle2,
     GitPullRequestArrow,
+    ChevronLeft,
+    ChevronRight,
 } from "lucide-react";
 import { ComponentType, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { dashboardRoutes } from "@/lib/routes/dashboard";
 
 interface SidebarProps {
     role: "admin" | "maintainer" | "contributor";
+    isCollapsed: boolean;
+    setIsCollapsed: (val: boolean) => void;
 }
 
 interface SidebarRoute {
@@ -35,14 +40,23 @@ interface SidebarContentProps {
     baseRoutes: Set<string>;
     onNavigate?: () => void;
     onLogout: () => Promise<void>;
+    isCollapsed?: boolean;
 }
 
-function SidebarContent({ currentRoutes, pathname, baseRoutes, onNavigate, onLogout }: SidebarContentProps) {
+function SidebarContent({ currentRoutes, pathname, baseRoutes, onNavigate, onLogout, isCollapsed = false }: SidebarContentProps) {
     return (
-        <aside className="flex flex-col h-full bg-surface-light border-r border-surface-lighter w-64 p-4">
-            <div className="flex items-center gap-3 px-2 mb-10 mt-2">
-                <div className="h-8 w-8 bg-primary rounded-none rotate-45" />
-                <span className="font-black text-xl tracking-tighter uppercase text-ink">ASoC</span>
+        <div className="flex flex-col h-full p-4 overflow-hidden">
+            <div className={`flex items-center gap-3 px-2 mb-10 mt-2 ${isCollapsed ? "justify-center" : ""}`}>
+                {!isCollapsed && (
+                    <motion.span
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -10 }}
+                        className="font-black text-xl tracking-tighter uppercase text-ink whitespace-nowrap"
+                    >
+                        ASoC
+                    </motion.span>
+                )}
             </div>
 
             <nav className="space-y-1 flex-1">
@@ -53,36 +67,58 @@ function SidebarContent({ currentRoutes, pathname, baseRoutes, onNavigate, onLog
                         <Button
                             key={route.href}
                             variant="ghost"
-                            className={`w-full justify-start mb-1 ${isActive
+                            title={isCollapsed ? route.label : undefined}
+                            className={`w-full mb-1 ${isCollapsed ? "justify-center px-0" : "justify-start"} ${isActive
                                 ? "bg-primary/10 text-primary font-bold border-r-2 border-primary rounded-none"
                                 : "font-(family-name:--font-jetbrains) text-ink/60 hover:text-primary hover:bg-surface-lighter/50 rounded-none"
                                 }`}
                             asChild
                         >
-                            <Link href={route.href} onClick={onNavigate}>
-                                <route.icon className={`mr-3 h-5 w-5 ${isActive ? "text-primary" : "text-ink/40 group-hover:text-primary"}`} />
-                                {route.label}
+                            <Link href={route.href} onClick={onNavigate} className="overflow-hidden">
+                                <route.icon className={`h-5 w-5 shrink-0 ${isActive ? "text-primary" : "text-ink/40 group-hover:text-primary"} ${!isCollapsed ? "mr-3" : ""}`} />
+                                <AnimatePresence mode="wait">
+                                    {!isCollapsed && (
+                                        <motion.span
+                                            initial={{ opacity: 0, width: 0 }}
+                                            animate={{ opacity: 1, width: "auto" }}
+                                            exit={{ opacity: 0, width: 0 }}
+                                            className="whitespace-nowrap overflow-hidden"
+                                        >
+                                            {route.label}
+                                        </motion.span>
+                                    )}
+                                </AnimatePresence>
                             </Link>
                         </Button>
                     );
                 })}
             </nav>
 
-            <div className="mt-auto pt-6 border-t border-surface-lighter">
+            <div className={`mt-auto pt-6 border-t border-surface-lighter ${isCollapsed ? "flex flex-col items-center" : ""}`}>
                 <Button
                     variant="ghost"
-                    className="w-full justify-start text-destructive hover:bg-destructive/10 hover:text-destructive rounded-none font-(family-name:--font-jetbrains) uppercase text-xs tracking-wider"
+                    title={isCollapsed ? "Logout" : undefined}
+                    className={`w-full text-destructive hover:bg-destructive/10 hover:text-destructive rounded-none font-(family-name:--font-jetbrains) uppercase text-xs tracking-wider ${isCollapsed ? "justify-center px-0" : "justify-start"}`}
                     onClick={onLogout}
                 >
-                    <LogOut className="mr-3 h-4 w-4" />
-                    Logout
+                    <LogOut className={`h-4 w-4 shrink-0 ${!isCollapsed ? "mr-3" : ""}`} />
+                    {!isCollapsed && (
+                        <motion.span
+                            initial={{ opacity: 0, width: 0 }}
+                            animate={{ opacity: 1, width: "auto" }}
+                            exit={{ opacity: 0, width: 0 }}
+                            className="whitespace-nowrap overflow-hidden"
+                        >
+                            Logout
+                        </motion.span>
+                    )}
                 </Button>
             </div>
-        </aside>
+        </div>
     );
 }
 
-export function DashboardSidebar({ role }: SidebarProps) {
+export function DashboardSidebar({ role, isCollapsed, setIsCollapsed }: SidebarProps) {
     const pathname = usePathname();
     const router = useRouter();
     const { logout } = useAuth();
@@ -123,19 +159,32 @@ export function DashboardSidebar({ role }: SidebarProps) {
     return (
         <>
             {/* Desktop Sidebar */}
-            <div className="hidden md:block fixed inset-y-0 left-0 z-50 w-64">
-                <SidebarContent
-                    currentRoutes={currentRoutes}
-                    pathname={pathname}
-                    baseRoutes={baseRoutes}
-                    onLogout={handleLogout}
-                />
-            </div>
+            <motion.div
+                className="hidden md:block fixed inset-y-0 left-0 z-50 bg-surface-light border-r border-surface-lighter"
+                animate={{ width: isCollapsed ? 80 : 256 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
+                <div className="relative h-full">
+                    <button
+                        onClick={() => setIsCollapsed(!isCollapsed)}
+                        className="absolute -right-3 top-10 bg-primary text-white rounded-none p-1 border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(15,23,42,1)] z-60 hover:scale-110 active:scale-95 transition-transform"
+                    >
+                        {isCollapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
+                    </button>
+
+                    <SidebarContent
+                        currentRoutes={currentRoutes}
+                        pathname={pathname}
+                        baseRoutes={baseRoutes}
+                        onLogout={handleLogout}
+                        isCollapsed={isCollapsed}
+                    />
+                </div>
+            </motion.div>
 
             {/* Mobile Sidebar */}
             <div className="md:hidden flex items-center justify-between p-4 border-b border-surface-lighter bg-surface-light sticky top-0 z-50">
                 <div className="flex items-center gap-2">
-                    <div className="h-6 w-6 bg-primary rounded-none rotate-45" />
                     <span className="font-black text-lg tracking-tight uppercase text-ink">ASoC</span>
                 </div>
                 <Sheet open={open} onOpenChange={setOpen}>
@@ -154,6 +203,7 @@ export function DashboardSidebar({ role }: SidebarProps) {
                             baseRoutes={baseRoutes}
                             onNavigate={() => setOpen(false)}
                             onLogout={handleLogout}
+                            isCollapsed={false}
                         />
                     </SheetContent>
                 </Sheet>

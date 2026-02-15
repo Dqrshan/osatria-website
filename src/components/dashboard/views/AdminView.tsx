@@ -118,7 +118,7 @@ export function AdminView() {
 
 // Helper Components for cleaner code
 const StatsCard = ({ title, value, label, icon: Icon, accent }: any) => (
-    <Card className={`border-2 ${accent ? 'border-accent shadow-[4px_4px_0_0_var(--color-accent)]' : 'border-primary shadow-[4px_4px_0_0_var(--color-primary)]'} hover:translate-y-[-4px] transition-transform bg-surface-light rounded-none group`}>
+    <Card className={`border-2 ${accent ? 'border-accent shadow-[4px_4px_0_0_var(--color-accent)]' : 'border-primary shadow-[4px_4px_0_0_var(--color-primary)]'} hover:-translate-y-1 transition-transform bg-surface-light rounded-none group`}>
         <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className={`text-sm font-bold uppercase tracking-wider ${accent ? 'text-accent' : 'text-primary'}`}>{title}</CardTitle>
             <Icon className={`h-5 w-5 ${accent ? 'text-accent' : 'text-primary'} group-hover:scale-110 transition-transform`} />
