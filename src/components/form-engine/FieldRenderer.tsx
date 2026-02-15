@@ -101,7 +101,7 @@ export function FieldRenderer({ field, register, errors, index, setValue, watch 
         <div className="space-y-3">
             {/* Question Label */}
             <label className="block">
-                <span className="text-sm font-mono text-ink/60">Question {index}</span>
+                <span className="text-sm font-(family-name:--font-jetbrains) text-ink/60">Question {index}</span>
                 <h3 className="text-lg font-semibold text-ink mt-1">
                     {field.label}
                     {field.required && <span className="text-red-500 ml-1">*</span>}

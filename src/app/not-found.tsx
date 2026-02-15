@@ -32,7 +32,7 @@ export default function NotFound() {
                 </div>
 
                 <div className="mt-12 pt-8 border-t-2 border-ink/5">
-                    <p className="text-xs text-ink/40 font-mono uppercase tracking-[0.2em]">
+                    <p className="text-xs text-ink/40 font-(family-name:--font-jetbrains) uppercase tracking-[0.2em]">
                         Error Code: 404_NOT_FOUND
                     </p>
                 </div>

@@ -56,7 +56,7 @@ export function QuestionEditor({ field, index, onUpdate }: QuestionEditorProps) 
         <div className="space-y-4">
             {/* Question Number and Type */}
             <div className="flex items-center justify-between">
-                <span className="text-sm font-mono text-ink/60">
+                <span className="text-sm font-(family-name:--font-jetbrains) text-ink/60">
                     Question {index + 1} • {getTypeLabel(field.type)}
                 </span>
                 <label className="flex items-center gap-2 text-sm">
@@ -66,7 +66,7 @@ export function QuestionEditor({ field, index, onUpdate }: QuestionEditorProps) 
                         onChange={(e) => onUpdate({ required: e.target.checked })}
                         className="rounded border-surface/30"
                     />
-                    <span className="font-mono">Required</span>
+                    <span className="font-(family-name:--font-jetbrains)">Required</span>
                 </label>
             </div>
 
@@ -81,7 +81,7 @@ export function QuestionEditor({ field, index, onUpdate }: QuestionEditorProps) 
             {/* Options for radio/checkbox/select */}
             {(field.type === "radio" || field.type === "checkbox" || field.type === "select") && (
                 <div className="space-y-2 pl-4 border-l-2 border-surface/20">
-                    <p className="text-xs font-mono text-ink/60 uppercase">Options</p>
+                    <p className="text-xs font-(family-name:--font-jetbrains) text-ink/60 uppercase">Options</p>
                     {field.options?.map((option, optIndex) => (
                         <div key={optIndex} className="flex items-center gap-2">
                             <span className="text-sm text-ink/60">{optIndex + 1}.</span>
@@ -110,7 +110,7 @@ export function QuestionEditor({ field, index, onUpdate }: QuestionEditorProps) 
 
             {field.type === "upload" && (
                 <div className="space-y-2 pl-4 border-l-2 border-surface/20">
-                    <p className="text-xs font-mono text-ink/60 uppercase">Supported File Types</p>
+                    <p className="text-xs font-(family-name:--font-jetbrains) text-ink/60 uppercase">Supported File Types</p>
                     <div className="grid sm:grid-cols-2 gap-2">
                         {UPLOAD_FILE_TYPE_OPTIONS.map((option) => {
                             const checked = field.acceptedFileTypes?.includes(option.key) || false;
@@ -122,7 +122,7 @@ export function QuestionEditor({ field, index, onUpdate }: QuestionEditorProps) 
                                         onChange={() => toggleUploadType(option.key)}
                                         className="rounded border-surface/30"
                                     />
-                                    <span className="font-mono text-xs">{option.label}</span>
+                                    <span className="font-(family-name:--font-jetbrains) text-xs">{option.label}</span>
                                 </label>
                             );
                         })}
@@ -132,7 +132,7 @@ export function QuestionEditor({ field, index, onUpdate }: QuestionEditorProps) 
 
             {/* Preview */}
             <div className="bg-surface/5 p-4 rounded-md border border-surface/10">
-                <p className="text-xs font-mono text-ink/60 mb-2 uppercase">Preview</p>
+                <p className="text-xs font-(family-name:--font-jetbrains) text-ink/60 mb-2 uppercase">Preview</p>
                 <p className="font-medium mb-3">
                     {field.label || "Question text will appear here"}
                     {field.required && <span className="text-red-500 ml-1">*</span>}

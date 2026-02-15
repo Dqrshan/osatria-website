@@ -116,7 +116,7 @@ export function FormRenderer({ form, user }: FormRendererProps) {
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-10">
             {/* Progress Bar - Floating Style */}
-            <div className="sticky top-16 z-30 backdrop-blur-md py-6 px-4 -mx-4 border-b-2 border-ink/10 mb-8">
+            <div className="sticky top-0 z-30 backdrop-blur-md py-6 px-4 -mx-4 border-b-2 border-ink/10 mb-8">
                 <div className="max-w-3xl mx-auto">
                     <div className="flex items-center justify-between mb-3 text-[10px] font-black tracking-widest uppercase text-ink/70">
                         <span>Completion Progress</span>

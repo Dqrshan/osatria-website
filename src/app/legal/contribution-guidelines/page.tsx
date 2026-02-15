@@ -8,7 +8,7 @@ export default function ContributionGuidelines() {
   return (
     <LegalLayout
       title="Contribution Guidelines"
-      description="Learn how to make effective contributions and collaborate with the Open Source Atria community."
+      description="Learn how to make effective contributions and collaborate with the Atria Summer of Code community."
       badge="DEVELOP"
       lastUpdated="February 1, 2026"
     >
@@ -18,7 +18,7 @@ export default function ContributionGuidelines() {
         <section className="bg-primary/5 p-8 border-l-4 border-primary">
           <h2 className="text-3xl font-black text-ink uppercase tracking-tighter mb-4">Welcome Contributors! 🚀</h2>
           <p className="font-medium text-xl">
-            Thank you for your interest in contributing to Open Source Atria! This guide will help you understand our contribution workflow and best practices. Whether you're a first-time contributor or an experienced open source developer, we're excited to have you here.
+            Thank you for your interest in contributing to Atria Summer of Code! This guide will help you understand our contribution workflow and best practices. Whether you're a first-time contributor or an experienced open source developer, we're excited to have you here.
           </p>
         </section>
 
@@ -36,7 +36,7 @@ export default function ContributionGuidelines() {
                 <li>A GitHub account</li>
                 <li>Git installed on your local machine</li>
                 <li>Basic understanding of Git workflows</li>
-                <li>Registered on the OSAtria platform</li>
+                <li>Registered on the Atria Summer of Code platform</li>
               </ul>
             </div>
 
@@ -75,7 +75,7 @@ export default function ContributionGuidelines() {
               </div>
               <div className="bg-surface p-6 border border-ink/10 grow">
                 <h3 className="font-bold text-xl uppercase mb-2">Fork & Clone</h3>
-                <div className="bg-black text-green-400 p-4 font-mono text-sm rounded-none border border-ink/20 overflow-x-auto">
+                <div className="bg-black text-green-400 p-4 font-(family-name:--font-jetbrains) text-sm rounded-none border border-ink/20 overflow-x-auto">
                   git clone https://github.com/YOUR-USERNAME/REPO-NAME.git<br />
                   cd REPO-NAME<br />
                   git remote add upstream https://github.com/ORIGINAL-OWNER/REPO-NAME.git
@@ -90,7 +90,7 @@ export default function ContributionGuidelines() {
               </div>
               <div className="bg-surface p-6 border border-primary/20 grow">
                 <h3 className="font-bold text-xl uppercase mb-2">Create Branch & Code</h3>
-                <div className="bg-black text-green-400 p-4 font-mono text-sm rounded-none border border-ink/20 overflow-x-auto mb-4">
+                <div className="bg-black text-green-400 p-4 font-(family-name:--font-jetbrains) text-sm rounded-none border border-ink/20 overflow-x-auto mb-4">
                   git checkout -b feature/amazing-feature
                 </div>
                 <p className="text-base text-ink/70">Write clean code, follow style guides, and test thoroughly.</p>
@@ -104,7 +104,7 @@ export default function ContributionGuidelines() {
               </div>
               <div className="bg-surface p-6 border border-accent/20 grow">
                 <h3 className="font-bold text-xl uppercase mb-2">Submit PR</h3>
-                <div className="bg-black text-green-400 p-4 font-mono text-sm rounded-none border border-ink/20 overflow-x-auto mb-4">
+                <div className="bg-black text-green-400 p-4 font-(family-name:--font-jetbrains) text-sm rounded-none border border-ink/20 overflow-x-auto mb-4">
                   git push origin feature/amazing-feature
                 </div>
                 <p className="text-base text-ink/70">Open a Pull Request on GitHub. Fill out the template completely.</p>

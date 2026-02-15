@@ -97,7 +97,7 @@ export default function FormPage() {
                         )}
                     </div>
 
-                    <p className="text-xs text-ink/40 font-mono uppercase tracking-widest pt-8">
+                    <p className="text-xs text-ink/40 font-(family-name:--font-jetbrains) uppercase tracking-widest pt-8">
                         {error === "Form not found" ? "404_FORM_MISSING" : "500_FETCH_FAILURE"}
                     </p>
                 </div>
@@ -107,6 +107,12 @@ export default function FormPage() {
 
     return (
         <div className="min-h-screen bg-paper flex flex-col">
+            {/* <PublicHeader
+                icon={Search}
+                badgeLabel="FORM"
+                backHref="/"
+            /> */}
+
             <PublicHero
                 badge="Registration Form"
                 title={form.title}
@@ -139,6 +145,11 @@ export default function FormPage() {
                     )}
                 </div>
             </main>
+
+            {/* <PublicFooter
+                contactEmail="opensource@atria.edu"
+                copyrightText="Atria Open Source Movement"
+            /> */}
         </div>
     );
 }

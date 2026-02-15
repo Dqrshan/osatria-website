@@ -64,7 +64,7 @@ export function PublicHeader({
                 <Link href={backHref} className="flex items-center gap-2 group">
                     <ArrowLeft className="h-4 w-4 text-primary group-hover:-translate-x-1 transition-transform" />
                     <span className="font-black tracking-tighter text-xl">
-                        OS<span className="text-primary">ATRIA</span>
+                        A<span className="text-primary">S</span>oC
                     </span>
                 </Link>
 
@@ -73,7 +73,7 @@ export function PublicHeader({
                 ) : (
                     <div className="flex items-center gap-3">
                         {badgeLabel && (
-                            <span className="text-xs font-mono text-ink/75 hidden sm:inline">
+                            <span className="text-xs font-(family-name:--font-jetbrains) text-ink/75 hidden sm:inline">
                                 {badgeLabel}
                             </span>
                         )}
@@ -167,7 +167,7 @@ export function PublicHero({
                 >
                     {badge && (
                         <div className={`inline-flex items-center gap-2 border-2 px-4 py-1.5 mb-6 ${badgeColorClass}`}>
-                            <span className="font-mono text-xs font-bold tracking-widest uppercase">{badge}</span>
+                            <span className="font-(family-name:--font-jetbrains) text-xs font-bold tracking-widest uppercase">{badge}</span>
                         </div>
                     )}
                     <h1 className="text-5xl md:text-7xl font-black tracking-tighter leading-none mb-6 text-ink">
@@ -179,7 +179,7 @@ export function PublicHero({
                         </p>
                     )}
                     {footer && (
-                        <p className="text-ink/60 mt-6 font-mono text-sm">
+                        <p className="text-ink/60 mt-6 font-(family-name:--font-jetbrains) text-sm">
                             {footer}
                         </p>
                     )}
@@ -248,17 +248,22 @@ export function PublicFooter({
                     {/* About Section - Takes more space */}
                     <div className="md:col-span-5">
                         <h3 className="font-black text-lg mb-3 uppercase tracking-tight text-ink">
-                            OS<span className="text-primary">ATRIA</span>
+                            A<span className="text-primary">S</span>oC
                         </h3>
                         <p className="text-ink/70 text-sm leading-relaxed">
                             The premier open-source event for innovators and builders at Atria Institute of Technology.
                         </p>
                     </div>
 
-                    {/* Legal Links */}
+                    {/* Legal & Resources */}
                     <div className="md:col-span-4">
-                        <h4 className="font-bold text-sm mb-3 uppercase tracking-wider text-ink/80">Legal</h4>
+                        <h4 className="font-bold text-sm mb-3 uppercase tracking-wider text-ink/80">Resources</h4>
                         <ul className="space-y-2">
+                            <li>
+                                <a href="/brand-kit" className="text-ink/70 hover:text-primary text-sm transition-colors">
+                                    Brand Kit
+                                </a>
+                            </li>
                             <li>
                                 <a href="/legal/code-of-conduct" className="text-ink/70 hover:text-primary text-sm transition-colors">
                                     Code of Conduct
@@ -338,7 +343,7 @@ export function PublicFooter({
                             </a>
                         </p>
                     )}
-                    <p className="text-ink/60 text-[10px] text-center font-mono uppercase tracking-wider">
+                    <p className="text-ink/60 text-[10px] text-center font-(family-name:--font-jetbrains) uppercase tracking-wider">
                         © {new Date().getFullYear()} {copyrightText}
                     </p>
                 </div>

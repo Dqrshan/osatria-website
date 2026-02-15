@@ -6,7 +6,7 @@ export default function TermsOfParticipation() {
   return (
     <LegalLayout
       title="Terms of Participation"
-      description="Please read these terms carefully before participating in the Open Source Atria event."
+      description="Please read these terms carefully before participating in the Atria Summer of Code event."
       lastUpdated="February 1, 2026"
     >
       <div className="space-y-12 text-ink/80 text-lg leading-relaxed">
@@ -16,7 +16,7 @@ export default function TermsOfParticipation() {
           <div className="border-l-4 border-ink pl-6 py-2 bg-ink/5 mb-8">
             <h2 className="text-3xl font-black text-ink uppercase tracking-tighter mb-4">Agreement</h2>
             <p className="font-medium">
-              By participating in the Open Source Atria event ("the Event"), you agree to comply with these Terms of Participation. This event is a collaboration between Apex Community and OSCode, designed to foster open-source contributions and community building.
+              By participating in the Atria Summer of Code event ("the Event"), you agree to comply with these Terms of Participation. This event is a collaboration between Apex Community and OSCode, designed to foster open-source contributions and community building.
             </p>
           </div>
         </section>
@@ -24,7 +24,7 @@ export default function TermsOfParticipation() {
         {/* 1. Eligibility */}
         <section>
           <h2 className="text-3xl font-black text-ink uppercase tracking-tighter mb-6 flex items-center gap-3">
-            <div className="bg-primary/20 text-primary w-10 h-10 flex items-center justify-center rounded-none font-mono text-xl">01</div>
+            <div className="bg-primary/20 text-primary w-10 h-10 flex items-center justify-center rounded-none font-(family-name:--font-jetbrains) text-xl">01</div>
             Eligibility
           </h2>
           <ul className="grid gap-4">
@@ -32,14 +32,14 @@ export default function TermsOfParticipation() {
               <CheckCircle2 className="h-6 w-6 text-primary shrink-0 mt-1" />
               <div>
                 <strong className="block text-ink font-bold uppercase mb-1">Institutional Access</strong>
-                <p>The Event is open to all students, faculty, and staff of Atria Institute of Technology with a valid ID card.</p>
+                <p>The Event is open to all students, faculty, and staff with a valid ID card.</p>
               </div>
             </li>
             <li className="bg-surface p-6 border-l-4 border-primary shadow-sm flex gap-4">
               <CheckCircle2 className="h-6 w-6 text-primary shrink-0 mt-1" />
               <div>
                 <strong className="block text-ink font-bold uppercase mb-1">Age Requirement</strong>
-                <p>Participants must be at least 16 years of age or have parental/guardian consent.</p>
+                <p>Participants must be at least 18 years of age or have parental/guardian consent.</p>
               </div>
             </li>
           </ul>
@@ -48,13 +48,13 @@ export default function TermsOfParticipation() {
         {/* 2. Requirements */}
         <section>
           <h2 className="text-3xl font-black text-ink uppercase tracking-tighter mb-6 flex items-center gap-3">
-            <div className="bg-primary/20 text-primary w-10 h-10 flex items-center justify-center rounded-none font-mono text-xl">02</div>
+            <div className="bg-primary/20 text-primary w-10 h-10 flex items-center justify-center rounded-none font-(family-name:--font-jetbrains) text-xl">02</div>
             Requirements
           </h2>
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-surface-50 p-6 border border-ink/10">
               <h3 className="font-bold text-ink uppercase mb-2">Registration</h3>
-              <p>All participants must register through the official OSAtria platform using their GitHub account.</p>
+              <p>All participants must register through the official Atria Summer of Code platform using their GitHub account.</p>
             </div>
             <div className="bg-surface-50 p-6 border border-ink/10">
               <h3 className="font-bold text-ink uppercase mb-2">Code of Conduct</h3>
@@ -74,7 +74,7 @@ export default function TermsOfParticipation() {
         {/* 3. Intellectual Property */}
         <section>
           <h2 className="text-3xl font-black text-ink uppercase tracking-tighter mb-6 flex items-center gap-3">
-            <div className="bg-primary/20 text-primary w-10 h-10 flex items-center justify-center rounded-none font-mono text-xl">03</div>
+            <div className="bg-primary/20 text-primary w-10 h-10 flex items-center justify-center rounded-none font-(family-name:--font-jetbrains) text-xl">03</div>
             Intellectual Property
           </h2>
           <div className="space-y-4">
@@ -93,7 +93,7 @@ export default function TermsOfParticipation() {
         {/* 4. Prohibited Conduct */}
         <section>
           <h2 className="text-3xl font-black text-ink uppercase tracking-tighter mb-6 flex items-center gap-3">
-            <div className="bg-red-500/10 text-red-500 w-10 h-10 flex items-center justify-center rounded-none font-mono text-xl">04</div>
+            <div className="bg-red-500/10 text-red-500 w-10 h-10 flex items-center justify-center rounded-none font-(family-name:--font-jetbrains) text-xl">04</div>
             Prohibited Conduct
           </h2>
           <div className="bg-red-50/50 border-2 border-red-500/20 p-6">
@@ -149,7 +149,7 @@ export default function TermsOfParticipation() {
         {/* Acknowledgment */}
         <section className="bg-ink text-paper p-8 text-center">
           <p className="text-lg font-medium">
-            By participating in Open Source Atria, you acknowledge that you have read, understood, and agree to be bound by these Terms of Participation.
+            By participating in Atria Summer of Code, you acknowledge that you have read, understood, and agree to be bound by these Terms of Participation.
           </p>
         </section>
       </div>

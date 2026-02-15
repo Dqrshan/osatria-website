@@ -45,7 +45,7 @@ export function TeamCard({ member }: TeamCardProps) {
 
             <CardContent className="pt-6 text-center relative bg-surface-light z-10 border-t border-surface-lighter">
                 <h3 className="text-xl font-black uppercase tracking-tight mb-1 text-ink">{member.name}</h3>
-                <p className="text-primary font-mono text-xs font-bold uppercase tracking-widest mb-4">{member.role}</p>
+                <p className="text-primary font-(family-name:--font-jetbrains) text-xs font-bold uppercase tracking-widest mb-4">{member.role}</p>
 
                 {member.bio && (
                     <p className="text-sm text-ink/60 mb-6 line-clamp-3">

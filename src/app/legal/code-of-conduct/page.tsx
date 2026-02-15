@@ -16,7 +16,7 @@ export default function CodeOfConduct() {
           <div className="border-l-4 border-primary pl-6 py-2 bg-primary/5 mb-8">
             <h2 className="text-3xl font-black text-ink uppercase tracking-tighter mb-4">Our Pledge</h2>
             <p className="font-medium">
-              In the interest of fostering an open and welcoming environment, we as contributors, maintainers, and organizers pledge to make participation in Open Source Atria a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.
+              In the interest of fostering an open and welcoming environment, we as contributors, maintainers, and organizers pledge to make participation in Atria Summer of Code a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.
             </p>
           </div>
         </section>
@@ -74,22 +74,22 @@ export default function CodeOfConduct() {
         <section>
           <h2 className="text-3xl font-black text-ink uppercase tracking-tighter mb-6">Scope</h2>
           <p className="mb-4">
-            This Code of Conduct applies to all Open Source Atria spaces, including but not limited to:
+            This Code of Conduct applies to all Atria Summer of Code spaces, including but not limited to:
           </p>
           <ul className="grid sm:grid-cols-2 gap-4 mt-6">
-            <li className="bg-surface p-4 border border-ink/10 rounded-none font-mono text-sm text-ink/70 flex items-center gap-3">
+            <li className="bg-surface p-4 border border-ink/10 rounded-none font-(family-name:--font-jetbrains) text-sm text-ink/70 flex items-center gap-3">
               <span className="w-2 h-2 bg-primary rounded-full"></span>
-              The OSAtria platform website
+              The Atria Summer of Code platform website
             </li>
-            <li className="bg-surface p-4 border border-ink/10 rounded-none font-mono text-sm text-ink/70 flex items-center gap-3">
+            <li className="bg-surface p-4 border border-ink/10 rounded-none font-(family-name:--font-jetbrains) text-sm text-ink/70 flex items-center gap-3">
               <span className="w-2 h-2 bg-primary rounded-full"></span>
               GitHub repositories & discussions
             </li>
-            <li className="bg-surface p-4 border border-ink/10 rounded-none font-mono text-sm text-ink/70 flex items-center gap-3">
+            <li className="bg-surface p-4 border border-ink/10 rounded-none font-(family-name:--font-jetbrains) text-sm text-ink/70 flex items-center gap-3">
               <span className="w-2 h-2 bg-primary rounded-full"></span>
               Communication channels (Discord, WhatsApp)
             </li>
-            <li className="bg-surface p-4 border border-ink/10 rounded-none font-mono text-sm text-ink/70 flex items-center gap-3">
+            <li className="bg-surface p-4 border border-ink/10 rounded-none font-(family-name:--font-jetbrains) text-sm text-ink/70 flex items-center gap-3">
               <span className="w-2 h-2 bg-primary rounded-full"></span>
               In-person & virtual events
             </li>

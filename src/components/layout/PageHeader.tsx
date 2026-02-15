@@ -151,7 +151,7 @@ export function PageHeader({
                     <Button
                         variant="ghost"
                         onClick={handleBackClick}
-                        className="mb-4 -ml-4 h-8 text-xs font-mono uppercase text-ink/70 hover:text-primary hover:bg-transparent"
+                        className="mb-4 -ml-4 h-8 text-xs font-(family-name:--font-jetbrains) uppercase text-ink/70 hover:text-primary hover:bg-transparent"
                     >
                         <ArrowLeft className="mr-2 h-3 w-3" />
                         {backButton.label || "Back"}
@@ -163,7 +163,7 @@ export function PageHeader({
                 </h1>
 
                 {description && (
-                    <p className="text-ink/70 mt-1 text-sm md:text-base font-mono">
+                    <p className="text-ink/70 mt-1 text-sm md:text-base font-(family-name:--font-jetbrains)">
                         {description}
                     </p>
                 )}
@@ -203,7 +203,7 @@ export function PageEmptyState({
             )}
             <h3 className="text-xl font-bold text-ink mb-2">{title}</h3>
             {description && (
-                <p className="text-ink/60 font-medium mb-6 font-mono">{description}</p>
+                <p className="text-ink/60 font-medium mb-6 font-(family-name:--font-jetbrains)">{description}</p>
             )}
             {action && (
                 <Button
@@ -236,7 +236,7 @@ export function PageLoadingState({
         <div className={`flex items-center justify-center py-20 ${className}`}>
             <div className="text-center">
                 <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-                <p className="text-ink/70 font-mono animate-pulse">{message}</p>
+                <p className="text-ink/70 font-(family-name:--font-jetbrains) animate-pulse">{message}</p>
             </div>
         </div>
     );
