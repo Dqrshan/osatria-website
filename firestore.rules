@@ -29,9 +29,9 @@ service cloud.firestore {
 
     // --- Users Collection ---
     match /users/{userId} {
-      // Users can read and write their own data
-      // Admins can read all users (for management)
-      allow read: if isAuthenticated() && (request.auth.uid == userId || isAdmin() || isMaintainer());
+      // Public read access for leaderboard visibility.
+      // Admins can read/write all users; users can write their own data.
+      allow read: if true;
       allow write: if isAuthenticated() && (request.auth.uid == userId || isAdmin());
     }
 
