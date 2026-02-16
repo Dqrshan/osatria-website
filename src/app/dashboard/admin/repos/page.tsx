@@ -161,7 +161,7 @@ export default function AdminReposPage() {
                                 </div>
                                 <div className="grid w-full items-center gap-1.5">
                                     <label htmlFor="tier" className="text-sm font-medium leading-none">Tier</label>
-                                    <Select value={newRepoTier} onValueChange={(v: string) => setNewRepoTier(v)}>
+                                    <Select value={newRepoTier} onValueChange={(v: string) => setNewRepoTier(v as "gold" | "silver" | "bronze")}>
                                         <SelectTrigger>
                                             <SelectValue placeholder="Select Tier" />
                                         </SelectTrigger>
