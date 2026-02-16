@@ -22,7 +22,7 @@ const CORE_TEAM: TeamMember[] = [
         name: "Pratham S",
         role: "Program Lead",
         image: "/team/Pratham.webp", 
-        bio: "---",
+        bio: "Leading ideas into reality",
         socials: {
             github: "https://github.com/Prathu241",
             linkedin: "https://www.linkedin.com/in/pratham-is-a-dev/",
@@ -45,7 +45,7 @@ const CORE_TEAM: TeamMember[] = [
         name: 'Ashitha G Kanchan',
         role: 'Design Lead',
         image: undefined,
-        bio: 'if it looks cute, I did that.',
+        bio: 'If it looks cute, I did that',
         socials: {
             github: 'https://github.com/Ashitha-g-kanchan',
             linkedin: 'https://www.linkedin.com/in/ashitha-g-kanchan/',
