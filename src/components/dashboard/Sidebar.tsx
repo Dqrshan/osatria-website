@@ -48,14 +48,17 @@ function SidebarContent({ currentRoutes, pathname, baseRoutes, onNavigate, onLog
         <div className="flex flex-col h-full p-4 overflow-hidden">
             <div className={`flex items-center gap-3 px-2 mb-10 mt-2 ${isCollapsed ? "justify-center" : ""}`}>
                 {!isCollapsed && (
-                    <motion.span
+                    <motion.div
                         initial={{ opacity: 0, x: -10 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: -10 }}
-                        className="font-black text-xl tracking-tighter uppercase text-ink whitespace-nowrap"
+                        className="font-black text-xl tracking-tighter flex items-center gap-2 group text-ink whitespace-nowrap"
+                        
                     >
-                        ASoC
-                    </motion.span>
+                        <span className="font-sans">A</span>
+                        <span className="font-(family-name:--font-meow) text-primary -ml-4 -mr-3 z-30 leading-none">S</span>
+                        <span className="font-(family-name:--font-jetbrains)">oC</span>
+                    </motion.div>
                 )}
             </div>
 
@@ -184,8 +187,10 @@ export function DashboardSidebar({ role, isCollapsed, setIsCollapsed }: SidebarP
 
             {/* Mobile Sidebar */}
             <div className="md:hidden flex items-center justify-between p-4 border-b border-surface-lighter bg-surface-light sticky top-0 z-50">
-                <div className="flex items-center gap-2">
-                    <span className="font-black text-lg tracking-tight uppercase text-ink">ASoC</span>
+                <div className="flex items-center gap-2 font-black text-2xl tracking-tighter">
+                    <span className="font-sans">A</span>
+                        <span className="font-(family-name:--font-meow) text-primary -ml-4 -mr-3 z-30 leading-none">S</span>
+                        <span className="font-(family-name:--font-jetbrains)">oC</span>
                 </div>
                 <Sheet open={open} onOpenChange={setOpen}>
                     <SheetTrigger asChild>

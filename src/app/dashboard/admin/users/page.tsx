@@ -127,7 +127,7 @@ export default function AdminMaintainersPage() {
                             </CardHeader>
                             <CardContent className="space-y-2">
                                 <div className="text-xs text-ink/60">
-                                    Added: {maintainer.createdAt?.seconds ? new Date(maintainer.createdAt.seconds * 1000).toLocaleDateString() : 'Unknown'}
+                                    Added: {maintainer.createdAt ? new Date(maintainer.createdAt instanceof Date ? maintainer.createdAt : maintainer.createdAt.seconds * 1000).toLocaleDateString() : 'Unknown'}
                                 </div>
                                 <Link
                                     href={`https://github.com/${maintainer.githubUsername}`}

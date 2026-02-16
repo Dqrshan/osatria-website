@@ -1,11 +1,11 @@
 import { db } from './config';
-import { collection, addDoc, getDocs, doc, deleteDoc, query, where } from 'firebase/firestore';
+import { collection, addDoc, getDocs, doc, deleteDoc, query, where, Timestamp } from 'firebase/firestore';
 
 export interface WhitelistedMaintainer {
     id?: string;
     githubUsername: string;
     addedBy: string; // Admin UID
-    createdAt: unknown;
+    createdAt: Timestamp | Date;
 }
 
 export const addToWhitelist = async (githubUsername: string, adminUid: string) => {
@@ -20,7 +20,7 @@ export const addToWhitelist = async (githubUsername: string, adminUid: string) =
         await addDoc(collection(db, 'maintainer_whitelist'), {
             githubUsername,
             addedBy: adminUid,
-            createdAt: new Date()
+            createdAt: Timestamp.now()
         });
     } catch (error) {
         console.error("Error adding to whitelist: ", error);
