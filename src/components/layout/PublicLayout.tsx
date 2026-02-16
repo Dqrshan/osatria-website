@@ -62,9 +62,11 @@ export function PublicHeader({
             <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
                 <Link href={backHref} className="flex items-center gap-2 group">
                     <ArrowLeft className="h-4 w-4 text-primary group-hover:-translate-x-1 transition-transform" />
-                    <span className="font-black tracking-tighter text-xl">
-                        A<span className="text-primary">S</span>oC
-                    </span>
+                    <div className="font-black tracking-tighter text-xl">
+                        <span className="font-sans">A</span>
+                        <span className="font-(family-name:--font-meow) text-primary -ml-4 -mr-3 z-30 leading-none">S</span>
+                        <span className="font-(family-name:--font-jetbrains)">oC</span>
+                    </div>
                 </Link>
 
                 {rightContent ? (
@@ -246,9 +248,11 @@ export function PublicFooter({
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-8">
                     {/* About Section - Takes more space */}
                     <div className="md:col-span-5">
-                        <h3 className="font-black text-lg mb-3 uppercase tracking-tight text-ink">
-                            A<span className="text-primary">S</span>oC
-                        </h3>
+                        <div className="flex font-black text-2xl tracking-tighter items-center gap-2 group mb-3 text-ink">
+                            <span className="font-sans">A</span>
+                            <span className="font-(family-name:--font-meow) text-secondary -ml-4 -mr-3 z-30 leading-none">S</span>
+                            <span className="font-(family-name:--font-jetbrains)">oC</span>
+                        </div>
                         <p className="text-ink/70 text-sm leading-relaxed">
                             The premier open-source event for innovators and builders at Atria Institute of Technology.
                         </p>

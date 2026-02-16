@@ -19,13 +19,9 @@ import { useState } from "react";
 import Image from "next/image";
 
 export function Navbar() {
-    const { user, userData, loginWithGithub, logout, loading } = useAuth();
+    const { user, userData, logout, loading } = useAuth();
     const router = useRouter();
     const [open, setOpen] = useState(false);
-
-    const handleLogin = async () => {
-        await loginWithGithub();
-    };
 
     const getDashboardLink = () => {
         if (!userData) return "/";
@@ -37,10 +33,10 @@ export function Navbar() {
         <nav className="sticky top-0 z-50 w-full border-b border-surface-lighter bg-surface/80 backdrop-blur-md text-ink">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
                 {/* Logo */}
-                <Link href="/" className="flex items-center gap-2 group">
-                    <span className="font-black tracking-tighter text-2xl">
-                        A<span className="text-primary group-hover:text-accent transition-colors">S</span>oC
-                    </span>
+                <Link href="/" className="flex font-black text-2xl tracking-tighter items-center gap-2 group">
+                        <span className="font-sans">A</span>
+                        <span className="font-(family-name:--font-meow) text-primary -ml-4 -mr-3 z-30 leading-none">S</span>
+                        <span className="font-(family-name:--font-jetbrains)">oC</span>
                 </Link>
 
                 {/* Desktop Nav Links */}
@@ -106,7 +102,7 @@ export function Navbar() {
                             </DropdownMenu>
                         </div>
                     ) : (
-                        <Button onClick={handleLogin} variant="brutalist" size="sm" className="hidden md:inline-flex">
+                        <Button variant="brutalist" size="sm" disabled className="hidden cursor-not-allowed md:inline-flex">
                             <Github className="mr-2 h-4 w-4" /> Login
                         </Button>
                     )}
@@ -159,10 +155,7 @@ export function Navbar() {
                                                 </Button>
                                             </div>
                                         ) : (
-                                            <Button onClick={async () => {
-                                                await handleLogin();
-                                                setOpen(false);
-                                            }} variant="brutalist" className="w-full">
+                                            <Button variant="brutalist" disabled className="w-full cursor-not-allowed">
                                                 <Github className="mr-2 h-4 w-4" /> Login
                                             </Button>
                                         )}
